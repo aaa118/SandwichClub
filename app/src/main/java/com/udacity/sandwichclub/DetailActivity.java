@@ -3,6 +3,7 @@ package com.udacity.sandwichclub;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,7 +16,7 @@ public class DetailActivity extends AppCompatActivity {
 
     public static final String EXTRA_POSITION = "extra_position";
     private static final int DEFAULT_POSITION = -1;
-    TextView textViewAlsoKnownAs, textViewPlaceOfOrigin, textViewDescription, textViewIngredients;
+    TextView textViewAlsoKnownAs, textViewAlsoKnownAsHolder, textViewPlaceOfOrigin, textViewDescription, textViewIngredients;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +25,7 @@ public class DetailActivity extends AppCompatActivity {
 
         ImageView ingredientsIv = findViewById(R.id.image_iv);
         textViewAlsoKnownAs = findViewById(R.id.also_known_tv);
+        textViewAlsoKnownAsHolder = findViewById(R.id.textView1);
         textViewPlaceOfOrigin = findViewById(R.id.origin_tv);
         textViewDescription = findViewById(R.id.description_tv);
         textViewIngredients = findViewById(R.id.ingredients_tv);
@@ -50,9 +52,9 @@ public class DetailActivity extends AppCompatActivity {
         }
 
         populateUI(sandwich);
-//        Picasso.with(this)
-//                .load(sandwich.getImage())
-//                .into(ingredientsIv);
+        Picasso.with(this)
+                .load(sandwich.getImage())
+                .into(ingredientsIv);
 
         setTitle(sandwich.getMainName());
     }
@@ -63,9 +65,26 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void populateUI(Sandwich sandwich) {
-        textViewAlsoKnownAs.setText(sandwich.getAlsoKnownAs().toString());
+        String prefix = ", ";
+        if (sandwich.getAlsoKnownAs().size() > 0) {
+            StringBuilder stringBuilder = new StringBuilder();
+            for (String details : sandwich.getAlsoKnownAs()) {
+                stringBuilder.append(details).append(prefix);
+            }
+            stringBuilder.setLength(stringBuilder.length() - 2);
+            textViewAlsoKnownAs.setText(stringBuilder);
+        } else {
+            textViewAlsoKnownAsHolder.setVisibility(View.GONE);
+        }
         textViewPlaceOfOrigin.setText(sandwich.getPlaceOfOrigin());
         textViewDescription.setText(sandwich.getDescription());
-        textViewIngredients.setText(sandwich.getIngredients().toString());
+        if (sandwich.getIngredients().size() > 0) {
+            StringBuilder stringBuilder = new StringBuilder();
+            for (String details : sandwich.getIngredients()) {
+                stringBuilder.append(details).append(prefix);
+            }
+            stringBuilder.setLength(stringBuilder.length() - 2);
+            textViewIngredients.setText(stringBuilder);
+        }
     }
 }
