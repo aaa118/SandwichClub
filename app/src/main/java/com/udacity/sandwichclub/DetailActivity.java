@@ -16,7 +16,7 @@ public class DetailActivity extends AppCompatActivity {
 
     public static final String EXTRA_POSITION = "extra_position";
     private static final int DEFAULT_POSITION = -1;
-    TextView textViewAlsoKnownAs, textViewAlsoKnownAsHolder, textViewPlaceOfOrigin, textViewDescription, textViewIngredients;
+    TextView textViewAlsoKnownAs, tvAlsoKnownAsLabel, textViewPlaceOfOrigin, textViewDescription, textViewIngredients;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +25,7 @@ public class DetailActivity extends AppCompatActivity {
 
         ImageView ingredientsIv = findViewById(R.id.image_iv);
         textViewAlsoKnownAs = findViewById(R.id.also_known_tv);
-        textViewAlsoKnownAsHolder = findViewById(R.id.textView1);
+        tvAlsoKnownAsLabel = findViewById(R.id.textView1);
         textViewPlaceOfOrigin = findViewById(R.id.origin_tv);
         textViewDescription = findViewById(R.id.description_tv);
         textViewIngredients = findViewById(R.id.ingredients_tv);
@@ -74,7 +74,7 @@ public class DetailActivity extends AppCompatActivity {
             stringBuilder.setLength(stringBuilder.length() - 2);
             textViewAlsoKnownAs.setText(stringBuilder);
         } else {
-            textViewAlsoKnownAsHolder.setVisibility(View.GONE);
+            tvAlsoKnownAsLabel.setVisibility(View.GONE);
         }
         textViewPlaceOfOrigin.setText(sandwich.getPlaceOfOrigin());
         textViewDescription.setText(sandwich.getDescription());
